@@ -1,0 +1,51 @@
+//Este é um exercicio para verificar a captura das setas do teclado atráves do evento keydown;
+//Você pode verificar o funcionamento deste programa através do link abaixo:
+//*********https://codepen.io/Deborars/pen/QWWLQqa***********
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{
+            background: turquoise;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="500" height="500" id="meu_canvas"></canvas>
+    <script>
+        var canvas =document.querySelector("canvas#meu_canvas");
+        var ctx = canvas.getContext('2d');
+
+        var x =0;
+        var y =0;
+        desenharPersonagem();
+
+        document.addEventListener("keydown", function(evento){
+            if(evento.keyCode==39){//seta para direita
+                x+=10;
+                desenharPersonagem();
+            }else if(evento.keyCode==37){// seta para esquerda
+                x-=10;
+                desenharPersonagem();
+            }else if(evento.keyCode==38){ //seta para cima
+                y-=10;
+                desenharPersonagem();
+            }else if(evento.keyCode==40){ //seta para baixo
+                y+=10;
+                desenharPersonagem();
+            }
+        })
+
+    
+        function desenharPersonagem(){
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            ctx.fillRect(x,y,20,50);
+        }
+    
+    </script>
+</body>
+</html>
