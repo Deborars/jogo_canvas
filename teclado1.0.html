@@ -1,0 +1,85 @@
+<!--Este é um exercicio para verificar a captura das setas do teclado atráves do evento keydown;
+Você pode verificar o funcionamento deste programa através do link abaixo:
+*********https://codepen.io/Deborars/pen/QWWLQqa***********-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="500" height="500" id="meu_canvas"></canvas>
+    <script>
+        var canvas =document.querySelector("canvas#meu_canvas");
+        var ctx = canvas.getContext('2d');
+
+        //função construtora
+
+        //definindo as variaveis do teclado e determinando seus valores correspondentes
+        const SETA_BAIXO=40, SETA_CIMA=38, SETA_DIREITA=39, SETA_ESQUERDA=37;  
+        
+        function Teclado(elemento){
+            this.elemento = elemento;
+
+            // array das teclas pressionadas
+            this.pressionadas = [];
+
+            //registrando o estado das teclas no array
+            var teclado = this;
+
+            elemento.addEventListener('keydown', function(evento) { 
+                teclado.pressionadas[evento.keyCode] = true;
+                 });
+            elemento.addEventListener('keyup', function(evento) { 
+                teclado.pressionadas[evento.keyCode] = false; 
+                });
+            } 
+        Teclado.prototype = { pressionada: function(tecla) { return this.pressionadas[tecla]; } 
+    }
+
+
+        //inicialização 
+        var x =0;
+        var y =0;
+        desenharPersonagem();
+
+        //criando o objeto teclado a partir da função construtora Teclado e atribuindo o arg. document a ela.
+        var teclado = new Teclado(document);
+
+        requestAnimationFrame(animar);
+
+        //animação do retangulo
+        function animar(){
+            if(teclado.pressionada(SETA_DIREITA)){
+                x+=10;
+            }else if(teclado.pressionada(SETA_ESQUERDA)){
+                x-=10;
+            }else if(teclado.pressionada(SETA_CIMA)){
+                y-=10;
+            }else if(teclado.pressionada(SETA_BAIXO)){
+                y+=10;
+            }
+            desenharPersonagem();
+            requestAnimationFrame(animar);
+        }
+
+        //desenha o retangulo
+        function desenharPersonagem(){
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            ctx.fillStyle="green";
+            ctx.fillRect(x,y,20,50);
+        }
+
+        
+        
+    
+    </script>
+</body>
+</html>
